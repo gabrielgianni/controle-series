@@ -54,4 +54,9 @@ class SeriesController extends Controller
         $serie->nome = $novoNome;
         $serie->save();
     }
+
+    public function redirect()
+    {
+        return redirect()->route('listar_series');
+    }
 }

@@ -13,6 +13,7 @@
 
 use Illuminate\Support\Facades\Auth;
 
+Route::get('/', 'SeriesController@redirect');
 Route::get('/series', 'SeriesController@index')->name('listar_series');
 Route::get('/series/criar', 'SeriesController@create')->name('form_criar_serie')->middleware('autenticador');
 Route::post('/series/criar', 'SeriesController@store')->middleware('autenticador');
