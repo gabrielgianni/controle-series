@@ -31,10 +31,16 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request, CriadorDeSerie $criadorDeSerie)
     {
+        $capa = null;
+        if($request->hasFile('capa')) {
+            $capa = $request->file('capa')->store('serie');
+        }
+
         $serie = $criadorDeSerie->criarSerie(
             $request->nome,
             $request->qtd_temporadas,
-            $request->ep_por_temporada
+            $request->ep_por_temporada,
+            $capa
         );
 
         $eventoNovaSerie = new EventsNovaSerie($request->nome, $request->qtd_temporadas, $request->ep_por_temporada);
