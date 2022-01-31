@@ -15,12 +15,13 @@ class RemovedorDeSerie
         // o código será executado somente se todo o código poder ser executado, então se o BD sair do ar enquanto o código está sendo executado, não terá o problema de sobrar episódios ou temporadas faltando pra ser excluido. 
         DB::transaction(function () use ($serieId, &$nomeSerie) {
             $serie = Serie::find($serieId);
+            $serieObj = (object) $serie->toArray();
             $nomeSerie = $serie->nome;
             
             $this->removerTemporadas($serie);
             $serie->delete();
 
-            $evento = new SerieApagada($serie);
+            $evento = new SerieApagada($serieObj);
             event($evento);
         });
 
